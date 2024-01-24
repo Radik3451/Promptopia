@@ -1,19 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import Form from "@components/Form";
 
-const EditPrompt = () => {
+const UpdatePrompt = () => {
   const router = useRouter();
-  const { data: session } = useSession();
   const searchParams = useSearchParams();
-  const promptId = searchParams.get('id');
+  const promptId = searchParams.get("id");
 
+  const [post, setPost] = useState({ prompt: "", tag: "", });
   const [submitting, setIsSubmitting] = useState(false);
-  const [post, setPost] = useState({ prompt: "", tag: "" });
 
   useEffect(() => {
     const getPromptDetails = async () => {
@@ -33,7 +31,7 @@ const EditPrompt = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    if(!promptId) return('Prompt ID not found')
+    if (!promptId) return alert("Missing PromptId!");
 
     try {
       const response = await fetch(`/api/prompt/${promptId}`, {
@@ -65,4 +63,4 @@ const EditPrompt = () => {
   );
 };
 
-export default EditPrompt;
+export default UpdatePrompt;
